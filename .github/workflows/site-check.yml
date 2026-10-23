@@ -1,0 +1,13 @@
+name: Vérification du site
+on: [push, pull_request]
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: node assets/game.test.mjs
+      - run: node --check assets/game.mjs
+      - run: python3 -c "import xml.etree.ElementTree as e; e.parse('sitemap.xml')"
